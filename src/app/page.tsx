@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { TEXTS, getLangLabel } from "@/lib/i18n";
 import { useTheme, ThemeToggle } from "@/components/ui/ThemeToggle";
 import { VoiceDropdown } from "@/components/ui/VoiceDropdown";
@@ -25,6 +26,12 @@ export default function Home() {
   const { speak } = useSpeech(voiceLang, audio);
   const activeLang: LangKey = voiceLang || "id-ID";
   const t = TEXTS[activeLang];
+
+  const pageVariants = {
+    initial: { opacity: 0, y: 15 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+    exit: { opacity: 0, y: -15, transition: { duration: 0.2 } },
+  };
 
   useEffect(() => {
     setDark(getSystemPreference());
@@ -114,9 +121,19 @@ export default function Home() {
 
   const tToggleLabel = dark ? (activeLang.startsWith("id") ? "Mode Terang" : "Light Mode") : (activeLang.startsWith("id") ? "Mode Gelap" : "Dark Mode");
 
+  const footerElement = (
+    <footer className="site-footer">
+      <div className="copyright">© {new Date().getFullYear()} Muhammad Effan Choirunanda<br />All rights reserved.</div>
+      <span className="social-links">
+        <a className="social-button" href="https://instagram.com/mhmmadeffan" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg className="stroke-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+        <a className="social-button" href="https://github.com/mhmmadeffan" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg className="stroke-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+      </span>
+    </footer>
+  );
+
   if (!started) {
     return (
-      <main className="setup-page">
+      <motion.main className="setup-page" initial="initial" animate="animate" exit="exit" variants={pageVariants}>
         <div className="setup-header-actions">
           <LanguageToggle currentLang={activeLang} onChange={(lang) => setVoiceLang(lang)} />
           <ThemeToggle dark={dark} toggle={() => setDark(!dark)} label={tToggleLabel} />
@@ -133,23 +150,18 @@ export default function Home() {
           </div>
           <VoiceDropdown value={voiceLang} onChange={setVoiceLang} t={t} />
           <div className="actions">
-            <button className="secondary" onClick={() => speak(t.testVoiceSpeech)}>{t.testBtn}</button>
-            <button className="primary" onClick={() => { setStarted(true); speak(t.gameStartedSpeech); }}>{t.startBtn} <span>→</span></button>
+            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="secondary" onClick={() => speak(t.testVoiceSpeech)}>{t.testBtn}</motion.button>
+            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="primary" onClick={() => { setStarted(true); speak(t.gameStartedSpeech); }}>{t.startBtn} <span>→</span></motion.button>
           </div>
           <p className="hint">{t.hint}</p>
         </section>
-      <footer className="site-footer">
-        <div className="copyright">© {new Date().getFullYear()} Muhammad Effan Choirunanda<br />All rights reserved.</div>
-        <span className="social-links">
-          <a className="social-button" href="https://instagram.com/mhmmadeffan" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg className="stroke-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
-          <a className="social-button" href="https://github.com/mhmmadeffan" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg className="stroke-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
-        </span>
-      </footer></main>
+        {footerElement}
+      </motion.main>
     );
   }
 
   return (
-    <main className="game-page">
+    <motion.main className="game-page" initial="initial" animate="animate" exit="exit" variants={pageVariants}>
       <header className="game-header">
         <div className="brand"><span className="brand-mark">+</span><span>SkorKita</span></div>
         <div className="game-header-actions">
@@ -160,18 +172,18 @@ export default function Home() {
         </div>
       </header>
       <section className="score-grid">
-        <button className={`score-panel coral ${lastTeam === "A" ? "pulse" : ""}`} onClick={() => addScore("A")}>
+        <motion.button className={`score-panel coral ${lastTeam === "A" ? "pulse" : ""}`} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }} onClick={() => addScore("A")}>
           <span className="team-index">01 / A</span>
           <span className="team-name">{teamA}</span>
-          <strong>{scoreA}</strong>
+          <motion.strong key={scoreA} initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>{scoreA}</motion.strong>
           <span className="tap">{t.tapToAdd} <b>+</b></span>
-        </button>
-        <button className={`score-panel teal ${lastTeam === "B" ? "pulse" : ""}`} onClick={() => addScore("B")}>
+        </motion.button>
+        <motion.button className={`score-panel teal ${lastTeam === "B" ? "pulse" : ""}`} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }} onClick={() => addScore("B")}>
           <span className="team-index">02 / B</span>
           <span className="team-name">{teamB}</span>
-          <strong>{scoreB}</strong>
+          <motion.strong key={scoreB} initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>{scoreB}</motion.strong>
           <span className="tap">{t.tapToAdd} <b>+</b></span>
-        </button>
+        </motion.button>
       </section>
       <footer className="control-bar">
         <div className="score-control"><button onClick={() => subtractScore("A")}>−</button><span>{teamA}</span></div>
@@ -182,12 +194,7 @@ export default function Home() {
         <div className="score-control right"><span>{teamB}</span><button onClick={() => subtractScore("B")}>−</button></div>
       </footer>
       <div className="keyboard">{t.keyboardHint}</div>
-    <footer className="site-footer">
-        <div className="copyright">© {new Date().getFullYear()} Muhammad Effan Choirunanda<br />All rights reserved.</div>
-        <span className="social-links">
-          <a className="social-button" href="https://instagram.com/mhmmadeffan" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg className="stroke-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
-          <a className="social-button" href="https://github.com/mhmmadeffan" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg className="stroke-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
-        </span>
-      </footer></main>
+      {footerElement}
+    </motion.main>
   );
 }
