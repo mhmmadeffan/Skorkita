@@ -32,11 +32,22 @@ export default function Home() {
   const activeLang: LangKey = voiceLang || "id-ID";
   const t = TEXTS[activeLang];
 
+  const containerVariants = {
+    animate: {
+      transition: { staggerChildren: 0.1 },
+    },
+  } as const;
+
+  const itemVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 100, damping: 15 } },
+  } as const;
+
   const pageVariants = {
-    initial: { opacity: 0, y: 15 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-    exit: { opacity: 0, y: -15, transition: { duration: 0.2 } },
-  };
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+  } as const;
 
   useEffect(() => {
     setDark(getSystemPreference());
@@ -147,21 +158,21 @@ export default function Home() {
         </div>
         <motion.div className="ambient ambient-one" animate={{ x: [0, 18, 0], y: [0, -14, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} />
         <motion.div className="ambient ambient-two" animate={{ x: [0, -16, 0], y: [0, 15, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }} />
-        <motion.section className="setup-card" initial={{ scale: 0.96, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 120, damping: 18 }}>
-          <div className="brand"><span className="brand-mark">+</span><span>SkorKita</span></div>
-          <p className="eyebrow">{t.eyebrow}</p>
-          <h1>{t.title1}<br /><em>{t.title2}</em></h1>
-          <p className="intro">{t.intro}</p>
-          <div className="form-grid">
+        <motion.section className="setup-card" variants={containerVariants} initial="initial" animate="animate">
+          <motion.div variants={itemVariants} className="brand"><span className="brand-mark">+</span><span>SkorKita</span></motion.div>
+          <motion.p variants={itemVariants} className="eyebrow">{t.eyebrow}</motion.p>
+          <motion.h1 variants={itemVariants}>{t.title1}<br /><em>{t.title2}</em></motion.h1>
+          <motion.p variants={itemVariants} className="intro">{t.intro}</motion.p>
+          <motion.div variants={itemVariants} className="form-grid">
             <label>{t.teamALabel}<input value={teamA} onChange={(e) => setTeamA(e.target.value)} placeholder="Team A" /></label>
             <label>{t.teamBLabel}<input value={teamB} onChange={(e) => setTeamB(e.target.value)} placeholder="Team B" /></label>
-          </div>
-          <VoiceDropdown value={voiceLang} onChange={setVoiceLang} t={t} />
-          <div className="actions">
-            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="secondary" onClick={() => speak(t.testVoiceSpeech)}>{t.testBtn}</motion.button>
-            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="primary" onClick={() => { setStarted(true); speak(t.gameStartedSpeech); }}>{t.startBtn} <span>→</span></motion.button>
-          </div>
-          <p className="hint">{t.hint}</p>
+          </motion.div>
+          <motion.div variants={itemVariants}><VoiceDropdown value={voiceLang} onChange={setVoiceLang} t={t} /></motion.div>
+          <motion.div variants={itemVariants} className="actions">
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="secondary" onClick={() => speak(t.testVoiceSpeech)}>{t.testBtn}</motion.button>
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="primary" onClick={() => { setStarted(true); speak(t.gameStartedSpeech); }}>{t.startBtn} <span>→</span></motion.button>
+          </motion.div>
+          <motion.p variants={itemVariants} className="hint">{t.hint}</motion.p>
         </motion.section>
         {footerElement}
       </motion.main>
@@ -174,22 +185,22 @@ export default function Home() {
         <div className="brand"><span className="brand-mark">+</span><span>SkorKita</span></div>
         <div className="game-header-actions">
           <div className="live"><span /> {t.liveMatch}</div>
-          <button className="exit" onClick={newGame}>{t.newGame} <span>↗</span></button>
-          <LanguageToggle currentLang={activeLang} onChange={(lang) => setVoiceLang(lang)} />
-          <ThemeToggle dark={dark} toggle={() => setDark(!dark)} label={tToggleLabel} />
+        <Tooltip title={t.hint}><span><button className="exit" onClick={newGame}>{t.newGame} <span>↗</span></button></span></Tooltip>
+        <LanguageToggle currentLang={activeLang} onChange={(lang) => setVoiceLang(lang)} />
+        <ThemeToggle dark={dark} toggle={() => setDark(!dark)} label={tToggleLabel} />
         </div>
       </motion.header>
       <section className="score-grid">
-        <motion.button className={`score-panel coral ${lastTeam === "A" ? "pulse" : ""}`} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }} onClick={() => addScore("A")}>
+        <motion.button className={`score-panel coral ${lastTeam === "A" ? "pulse" : ""}`} whileHover={{ scale: 1.03, rotate: -0.3 }} whileTap={{ scale: 0.96 }} onClick={() => addScore("A")}>
           <span className="team-index">01 / A</span>
           <span className="team-name">{teamA}</span>
-          <motion.strong key={scoreA} initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>{scoreA}</motion.strong>
+          <motion.strong key={scoreA} initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 320, damping: 16 }}>{scoreA}</motion.strong>
           <span className="tap">{t.tapToAdd} <b>+</b></span>
         </motion.button>
-        <motion.button className={`score-panel teal ${lastTeam === "B" ? "pulse" : ""}`} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }} onClick={() => addScore("B")}>
+        <motion.button className={`score-panel teal ${lastTeam === "B" ? "pulse" : ""}`} whileHover={{ scale: 1.03, rotate: 0.3 }} whileTap={{ scale: 0.96 }} onClick={() => addScore("B")}>
           <span className="team-index">02 / B</span>
           <span className="team-name">{teamB}</span>
-          <motion.strong key={scoreB} initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>{scoreB}</motion.strong>
+          <motion.strong key={scoreB} initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 320, damping: 16 }}>{scoreB}</motion.strong>
           <span className="tap">{t.tapToAdd} <b>+</b></span>
         </motion.button>
       </section>
@@ -203,6 +214,11 @@ export default function Home() {
       </footer>
       <div className="keyboard">{t.keyboardHint}</div>
       {footerElement}
+      <Snackbar open={snackbarOpen} autoHideDuration={2200} onClose={() => setSnackbarOpen(false)} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+        <Alert severity="info" onClose={() => setSnackbarOpen(false)} variant="outlined">
+          {snackbarMsg}
+        </Alert>
+      </Snackbar>
     </motion.main>
   );
 }
