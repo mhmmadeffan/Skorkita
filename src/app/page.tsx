@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TEXTS, getLangLabel } from "@/lib/i18n";
 import { useTheme, ThemeToggle } from "@/components/ui/ThemeToggle";
 import { VoiceDropdown } from "@/components/ui/VoiceDropdown";
+import { LanguageToggle } from "@/components/ui/LanguageToggle";
 import { useSpeech } from "@/hooks/useSpeech";
 import type { Team, LangKey } from "@/types/game.types";
 
@@ -14,21 +15,56 @@ export default function Home() {
   const [scoreA, setScoreA] = useState(0);
   const [scoreB, setScoreB] = useState(0);
   const [audio, setAudio] = useState(true);
-  const [voiceLang, setVoiceLang] = useState<LangKey>("id-ID");
+  const [voiceLang, setVoiceLang] = useState<LangKey | "">("id-ID");
   const [lastTeam, setLastTeam] = useState<Team | null>(null);
   const [dark, setDark] = useState(false);
+  const restoredRef = useRef(false);
 
   const { toggleTheme, getSystemPreference } = useTheme();
+  const storageKey = "skorkita-score-state";
   const { speak } = useSpeech(voiceLang, audio);
-  const t = TEXTS[voiceLang];
+  const activeLang: LangKey = voiceLang || "id-ID";
+  const t = TEXTS[activeLang];
 
   useEffect(() => {
     setDark(getSystemPreference());
+    const saved = localStorage.getItem(storageKey);
+    if (!saved) {
+      restoredRef.current = true;
+      return;
+    }
+    try {
+      const state = JSON.parse(saved) as Partial<{
+        started: boolean;
+        teamA: string;
+        teamB: string;
+        scoreA: number;
+        scoreB: number;
+        audio: boolean;
+        voiceLang: LangKey | "";
+      }>;
+      if (typeof state.started === "boolean") setStarted(state.started);
+      if (typeof state.teamA === "string") setTeamA(state.teamA);
+      if (typeof state.teamB === "string") setTeamB(state.teamB);
+      if (typeof state.scoreA === "number" && state.scoreA >= 0) setScoreA(state.scoreA);
+      if (typeof state.scoreB === "number" && state.scoreB >= 0) setScoreB(state.scoreB);
+      if (typeof state.audio === "boolean") setAudio(state.audio);
+      if (state.voiceLang === "" || state.voiceLang === "id-ID" || state.voiceLang === "en-US") setVoiceLang(state.voiceLang);
+    } catch {
+      localStorage.removeItem(storageKey);
+    } finally {
+      restoredRef.current = true;
+    }
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = getLangLabel(voiceLang);
-  }, [voiceLang]);
+    if (!restoredRef.current) return;
+    localStorage.setItem(storageKey, JSON.stringify({ started, teamA, teamB, scoreA, scoreB, audio, voiceLang }));
+  }, [started, teamA, teamB, scoreA, scoreB, audio, voiceLang]);
+
+  useEffect(() => {
+    document.documentElement.lang = getLangLabel(activeLang);
+  }, [activeLang]);
 
   useEffect(() => {
     toggleTheme(dark);
@@ -54,7 +90,7 @@ export default function Home() {
     else setScoreB(nextB);
     setLastTeam(team);
     window.setTimeout(() => setLastTeam(null), 450);
-    speak(nextA === nextB ? t.tieSpeech(nextA) : t.scoreSpeech(team === "A" ? teamA : teamB, team === "A" ? nextA : nextB));
+    speak(nextA === nextB ? t.tieSpeech(nextA) : `${teamA} ${nextA}, ${teamB} ${nextB}`);
   }
 
   const subtractScore = (team: Team) => {
@@ -76,12 +112,15 @@ export default function Home() {
     setTeamB("Team B");
   };
 
-  const tToggleLabel = dark ? (voiceLang.startsWith("id") ? "Mode Terang" : "Light Mode") : (voiceLang.startsWith("id") ? "Mode Gelap" : "Dark Mode");
+  const tToggleLabel = dark ? (activeLang.startsWith("id") ? "Mode Terang" : "Light Mode") : (activeLang.startsWith("id") ? "Mode Gelap" : "Dark Mode");
 
   if (!started) {
     return (
       <main className="setup-page">
-        <ThemeToggle dark={dark} toggle={() => setDark(!dark)} label={tToggleLabel} />
+        <div className="setup-header-actions">
+          <LanguageToggle currentLang={activeLang} onChange={(lang) => setVoiceLang(lang)} />
+          <ThemeToggle dark={dark} toggle={() => setDark(!dark)} label={tToggleLabel} />
+        </div>
         <div className="ambient ambient-one" /><div className="ambient ambient-two" />
         <section className="setup-card">
           <div className="brand"><span className="brand-mark">+</span><span>SkorKita</span></div>
@@ -116,6 +155,7 @@ export default function Home() {
         <div className="game-header-actions">
           <div className="live"><span /> {t.liveMatch}</div>
           <button className="exit" onClick={newGame}>{t.newGame} <span>↗</span></button>
+          <LanguageToggle currentLang={activeLang} onChange={(lang) => setVoiceLang(lang)} />
           <ThemeToggle dark={dark} toggle={() => setDark(!dark)} label={tToggleLabel} />
         </div>
       </header>

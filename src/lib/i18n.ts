@@ -26,6 +26,7 @@ export const TEXTS: Record<
     scoreSpeech: (team: string, score: number) => string;
     resetSpeech: string;
     voiceOptions: Record<LangKey, string>;
+    noVoiceOption: string;
   }
 > = {
   "id-ID": {
@@ -52,9 +53,10 @@ export const TEXTS: Record<
     scoreSpeech: (team: string, score: number) => `${team} ${score}`,
     resetSpeech: "Skor telah direset ke nol",
     voiceOptions: {
-      "id-ID": "Indonesia Indonesia (id_ID)",
+      "id-ID": "Indonesia (id_ID)",
       "en-US": "Inggris Amerika Serikat (en_US)",
     },
+    noVoiceOption: "Suara nonaktif",
   },
   "en-US": {
     eyebrow: "MATCH CONTROL / 01",
@@ -80,9 +82,10 @@ export const TEXTS: Record<
     scoreSpeech: (team: string, score: number) => `${team} ${score}`,
     resetSpeech: "Score has been reset to zero",
     voiceOptions: {
-      "id-ID": "Indonesian Indonesia (id_ID)",
+      "id-ID": "Indonesian (id_ID)",
       "en-US": "English United States (en_US)",
     },
+    noVoiceOption: "Voice disabled",
   },
 };
 

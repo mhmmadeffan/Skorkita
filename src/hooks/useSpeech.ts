@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import type { LangKey } from "@/types/game.types";
 import { LANG_KEYS } from "@/types/game.types";
 
-export function useSpeech(voiceLang: LangKey, audioEnabled: boolean) {
+export function useSpeech(voiceLang: LangKey | "", audioEnabled: boolean) {
   const [resolvedVoices, setResolvedVoices] = useState<Record<string, SpeechSynthesisVoice | null>>({});
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export function useSpeech(voiceLang: LangKey, audioEnabled: boolean) {
   }, []);
 
   const speak = (text: string) => {
-    if (!audioEnabled) return;
+    if (!audioEnabled || !voiceLang) return;
     const utterance = new SpeechSynthesisUtterance(text);
     const selectedVoice = resolvedVoices[voiceLang] ?? null;
     if (selectedVoice) utterance.voice = selectedVoice;
