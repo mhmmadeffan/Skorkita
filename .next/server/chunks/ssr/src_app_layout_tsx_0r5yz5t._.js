@@ -1,0 +1,3 @@
+module.exports=[27572,a=>{"use strict";var b=a.i(7997);a.s(["default",0,function({children:a}){return(0,b.jsx)("html",{lang:"id",children:(0,b.jsx)("body",{suppressHydrationWarning:!0,children:a})})},"metadata",0,{title:"SkorKita — Penghitung Skor Pertandingan",description:"Aplikasi penghitung skor pertandingan modern, cepat, dan responsif dengan pengumuman suara otomatis dalam bahasa Indonesia dan Inggris.",keywords:["penghitung skor","score tracker","skorkita","aplikasi skor","pertandingan","futsa, badminton, basket"]}])},50645,function(a){a.n(a.i(27572))}];
+
+//# sourceMappingURL=src_app_layout_tsx_0r5yz5t._.js.map
