@@ -44,11 +44,13 @@ Key highlights:
 
 ---
 
-## 🧩 Components & Architecture
+## 🧩 Project Structure & Components
 
 - **`src/app/layout.tsx`**: Root layout configuring metadata, SEO keywords, typography, and hydration handling.
-- **`src/app/page.tsx`**: Main interactive client application managing game state, speech synthesis, theme state, keyboard event listeners, and bilingual dictionary (`TEXTS`).
-  - **`VoiceDropdown`**: Custom accessible dropdown adhering to light/dark themes.
-  - **`ThemeToggle`**: Dynamic switcher supporting `localStorage` persistence and `prefers-color-scheme`.
-  - **Score Panels & Controls**: Interactive split views with active states and visual feedback.
+- **`src/app/page.tsx`**: Main page orchestrating the setup and live scoreboard flows.
+- **`src/components/ui/VoiceDropdown.tsx`**: Custom accessible dropdown for language/voice selection.
+- **`src/components/ui/ThemeToggle.tsx`**: Theme switcher button and hook managing persistent dark/light mode state.
+- **`src/hooks/useSpeech.ts`**: Custom speech synthesis hook handling voice matching and utterances.
+- **`src/lib/i18n.ts`**: Bilingual text dictionary supporting Indonesian and English UI.
+- **`src/types/game.types`**: TypeScript interfaces and types for game state and configurations.
 - **`src/app/globals.css`**: Design tokens, color system (Coral & Teal palette), responsive grid layouts, animations, and dark mode transitions.
