@@ -90,7 +90,7 @@ export default function Home() {
     else setScoreB(nextB);
     setLastTeam(team);
     window.setTimeout(() => setLastTeam(null), 450);
-    speak(nextA === nextB ? t.tieSpeech(nextA) : `${teamA} ${nextA}, ${teamB} ${nextB}`);
+    speak(nextA === nextB ? t.tieSpeech(nextA) : `${team === "A" ? teamA : teamB} ${team === "A" ? nextA : nextB}, ${team === "A" ? teamB : teamA} ${team === "A" ? nextB : nextA}`);
   }
 
   const subtractScore = (team: Team) => {
