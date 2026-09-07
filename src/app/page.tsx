@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Tooltip from "@mui/material/Tooltip";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
 import { TEXTS, getLangLabel } from "@/lib/i18n";
 import { useTheme, ThemeToggle } from "@/components/ui/ThemeToggle";
 import { VoiceDropdown } from "@/components/ui/VoiceDropdown";
@@ -169,8 +170,8 @@ export default function Home() {
           </motion.div>
           <motion.div variants={itemVariants}><VoiceDropdown value={voiceLang} onChange={setVoiceLang} t={t} /></motion.div>
           <motion.div variants={itemVariants} className="actions">
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="secondary" onClick={() => speak(t.testVoiceSpeech)}>{t.testBtn}</motion.button>
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="primary" onClick={() => { setStarted(true); speak(t.gameStartedSpeech); }}>{t.startBtn} <span>→</span></motion.button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}><Button variant="outlined" className="secondary" onClick={() => speak(t.testVoiceSpeech)}>{t.testBtn}</Button></motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}><Button variant="contained" className="primary" onClick={() => { setStarted(true); speak(t.gameStartedSpeech); }}>{t.startBtn} <span>→</span></Button></motion.div>
           </motion.div>
           <motion.p variants={itemVariants} className="hint">{t.hint}</motion.p>
         </motion.section>
@@ -185,7 +186,7 @@ export default function Home() {
         <div className="brand"><span className="brand-mark">+</span><span>SkorKita</span></div>
         <div className="game-header-actions">
           <div className="live"><span /> {t.liveMatch}</div>
-        <Tooltip title={t.hint}><span><button className="exit" onClick={newGame}>{t.newGame} <span>↗</span></button></span></Tooltip>
+        <Tooltip title={t.hint}><span><Button variant="outlined" className="exit" onClick={newGame}>{t.newGame} <span>↗</span></Button></span></Tooltip>
         <LanguageToggle currentLang={activeLang} onChange={(lang) => setVoiceLang(lang)} />
         <ThemeToggle dark={dark} toggle={() => setDark(!dark)} label={tToggleLabel} />
         </div>
@@ -205,12 +206,12 @@ export default function Home() {
         </motion.button>
       </section>
       <footer className="control-bar">
-        <div className="score-control"><button onClick={() => subtractScore("A")}>−</button><span>{teamA}</span></div>
+        <div className="score-control"><Button variant="outlined" onClick={() => subtractScore("A")}>−</Button><span>{teamA}</span></div>
         <div className="center-controls">
-          <button onClick={reset}>{t.resetScore}</button>
-          <button onClick={() => setAudio(!audio)}>{audio ? t.soundOn : t.soundOff} <span className={`toggle ${audio ? "on" : ""}`} /></button>
+          <Button variant="outlined" onClick={reset}>{t.resetScore}</Button>
+          <Button variant="outlined" onClick={() => setAudio(!audio)}>{audio ? t.soundOn : t.soundOff} <span className={`toggle ${audio ? "on" : ""}`} /></Button>
         </div>
-        <div className="score-control right"><span>{teamB}</span><button onClick={() => subtractScore("B")}>−</button></div>
+        <div className="score-control right"><span>{teamB}</span><Button variant="outlined" onClick={() => subtractScore("B")}>−</Button></div>
       </footer>
       <div className="keyboard">{t.keyboardHint}</div>
       {footerElement}

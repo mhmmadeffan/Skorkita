@@ -36,10 +36,12 @@ input:focus, select:focus { border-color: var(--coral); }
 .voice-select-options li.selected { color: var(--coral); font-weight: bold; }
 .dark .voice-select-options li:hover { background: rgba(255,255,255,.06); }
 .actions { display: grid; grid-template-columns: minmax(150px, .8fr) minmax(220px, 1.2fr); gap: 12px; margin-top: 34px; }
-.actions button, .center-controls button { min-height: 52px; padding: 14px 20px; border: 1px solid var(--muted); background: transparent; font-weight: bold; line-height: 1.2; transition: border .3s, background .3s, transform .2s; }
-.actions button:hover { transform: translateY(-1px); }
+.actions .secondary, .actions .primary { min-height: 52px; padding: 14px 20px; border: 1px solid var(--muted); background: transparent; font-weight: bold; line-height: 1.2; transition: border .3s, background .3s, transform .2s; }
+.actions .secondary:hover, .actions .primary:hover { transform: translateY(-1px); }
 .actions .primary { background: var(--ink); border-color: var(--ink); color: var(--paper); text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .primary span { font-size: 20px; flex: 0 0 auto; }
+.center-controls { display: flex; gap: 10px; }
+.center-controls .MuiButton-root { padding: 9px 14px; font-size: 12px; }
 .hint { font-size: 11px; color: var(--muted); margin-top: 28px; }
 .theme-toggle { border: 0; background: var(--ink); color: var(--paper); padding: 8px 12px; border-radius: 99px; font-size: 11px; font-weight: bold; transition: background .3s; }
 .setup-header-actions { position: absolute; top: 20px; right: 20px; z-index: 10; display: flex; gap: 8px; }
