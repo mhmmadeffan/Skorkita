@@ -164,7 +164,10 @@ export default function Home() {
         <motion.div className="ambient ambient-one" animate={{ x: [0, 18, 0], y: [0, -14, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} />
         <motion.div className="ambient ambient-two" animate={{ x: [0, -16, 0], y: [0, 15, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }} />
         <motion.section className="setup-card" variants={containerVariants} initial="initial" animate="animate">
-          <motion.div variants={itemVariants} className="brand"><span className="brand-mark">+</span><span>SkorKita</span></motion.div>
+          <motion.div variants={itemVariants} className="brand">
+            <img src="/dashboard.svg" alt="Logo" width="24" height="24" className="brand-icon" />
+            <span>SkorKita</span>
+          </motion.div>
           <motion.p variants={itemVariants} className="eyebrow">{t.eyebrow}</motion.p>
           <motion.h1 variants={itemVariants}>{t.title1}<br /><em>{t.title2}</em></motion.h1>
           <motion.p variants={itemVariants} className="intro">{t.intro}</motion.p>
@@ -187,7 +190,10 @@ export default function Home() {
   return (
     <motion.main className="game-page" initial="initial" animate="animate" exit="exit" variants={pageVariants}>
       <motion.header className="game-header" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
-        <div className="brand"><span className="brand-mark">+</span><span>SkorKita</span></div>
+          <div className="brand">
+            <img src="/dashboard.svg" alt="Logo" width="24" height="24" className="brand-icon" />
+            <span>SkorKita</span>
+          </div>
         <div className="game-header-actions">
           <div className="live"><span /> {t.liveMatch}</div>
         <Tooltip title={t.hint}><span><Button variant="outlined" className="exit" onClick={newGame}>{t.newGame} <span>↗</span></Button></span></Tooltip>

@@ -14,7 +14,8 @@ a.social-button:active { transform: scale(.9); }
 .ambient-two { width: 400px; height: 400px; background: var(--coral); opacity: .2; right: -150px; top: -170px; }
 .setup-card { width: min(640px, 100%); padding: 42px; background: var(--paper); border: 1px solid var(--ink); box-shadow: 0 24px 70px rgba(0,0,0,.1); position: relative; z-index: 1; transition: background .3s; }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 800; letter-spacing: .18em; }
-.brand-mark { display: grid; place-items: center; width: 25px; height: 25px; background: var(--ink); color: var(--paper); font-size: 21px; line-height: 1; transition: background .3s; }
+.brand-icon { width: 24px; height: 24px; display: block; filter: none; }
+.dark .brand-icon { filter: brightness(0) invert(1) brightness(1.8); }
 .eyebrow { color: var(--coral); font-size: 11px; font-weight: bold; letter-spacing: .2em; margin: 56px 0 18px; }
 h1 { font-size: clamp(42px, 7vw, 72px); line-height: .96; letter-spacing: -.07em; margin: 0; }
 h1 em { color: var(--coral); font-family: Georgia, serif; font-weight: normal; }

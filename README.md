@@ -1,56 +1,58 @@
 # SkorKita
 
-**SkorKita** is a modern, fast, and responsive match score counter web application built with **Next.js (App Router)** and **Tailwind CSS**. It provides a real-time full-screen scoreboard experience with automatic voice announcements in Indonesian and English, keyboard shortcuts, and full light/dark theme support.
+**SkorKita** is a responsive, offline-friendly match score counter built with **Next.js App Router**, **Material UI**, **Framer Motion**, and **Tailwind CSS**. It provides a full-screen two-team scoreboard with bilingual voice announcements, keyboard controls, persistent match state, and dark/light themes.
 
----
+## Overview
 
-## 🎯 Overview & Purpose
+SkorKita supports tournaments, casual matches, and sports sessions such as badminton, futsal, table tennis, volleyball, and basketball. It focuses on fast score input, high visibility, and recovery after a browser refresh or temporary connectivity loss.
 
-SkorKita is designed for matches, tournaments, and sports sessions (badminton, futsal, table tennis, volleyball, basketball, etc.) where quick, clear, and visible score tracking is essential.
+## Features
 
-Key highlights:
-- **Full-Screen Split View**: Large interactive panels for Team A and Team B.
-- **Voice Announcements**: Built-in Speech Synthesis reads score updates and winner/tie statuses in real-time.
-- **Bilingual Support**: Dynamic language switching between Indonesian (`id_ID`) and US English (`en_US`).
-- **Dark & Light Mode**: Complete theme customization with persistent storage and system preference fallback.
-- **Keyboard Shortcuts**: Effortless score control using physical keys.
+- **Two-team scoreboard**: Full-screen split layout. Tap/click either team panel to add a point.
+- **Persistent scores**: Match state, team names, voice settings, and audio status are stored in `localStorage` under `skorkita-score-state`.
+- **Voice announcements**: Uses Web Speech API. The scoring team is announced first, followed by opponent score.
+- **Voice choices**: Indonesian (`id_ID`), US English (`en_US`), or voice disabled.
+- **Bilingual UI**: Indonesian and English interface selector with country flags.
+- **Dark/light theme**: System preference fallback and saved user preference.
+- **Material UI controls**: Buttons, tooltips, snackbar feedback, and alerts.
+- **Framer Motion**: Staggered spring entrance, animated score changes, hover, and tap interactions.
+- **Keyboard shortcuts**:
 
----
+| Key | Action |
+| --- | --- |
+| `A` | Add 1 point to Team A |
+| `B` | Add 1 point to Team B |
+| `Q` | Subtract 1 point from Team A |
+| `W` | Subtract 1 point from Team B |
+| `R` | Reset both scores |
+| `M` | Toggle audio |
 
-## ⚡ Key Features
+## Project Structure
 
-1. **Setup Screen**
-   - Custom team names configuration.
-   - Announcement voice and language selector (Indonesian / US English).
-   - Instant audio test trigger.
-   - Light/Dark mode toggle.
+- `src/app/layout.tsx` — Root metadata, SEO configuration, and document layout.
+- `src/app/page.tsx` — Main match state, persistence, animation orchestration, and UI composition.
+- `src/app/globals.css` — Theme tokens, responsive styling, Material UI overrides, and interaction styles.
+- `src/components/ui/LanguageToggle.tsx` — Flag-based Indonesian/English selector.
+- `src/components/ui/ThemeToggle.tsx` — Dark/light mode button and preference helper.
+- `src/components/ui/VoiceDropdown.tsx` — Theme-aware custom voice selector.
+- `src/hooks/useSpeech.ts` — Web Speech API voice loading and announcement logic.
+- `src/lib/i18n.ts` — Indonesian and English text dictionaries.
+- `src/types/game.types.ts` — Shared TypeScript types, language constants, and game defaults.
 
-2. **Match / Live Scoreboard Screen**
-   - High-contrast split panels with tap/click to score (+1).
-   - Score deduction controls (-1) for both teams.
-   - Instant score reset and new match setup transitions.
-   - Audio announcement toggle (On / Off).
-   - Visual pulse animation on score increment.
+## Public Assets and SEO
 
-3. **Shortcuts**
-   | Key | Action |
-   | --- | --- |
-   | `A` | +1 Team A |
-   | `B` | +1 Team B |
-   | `Q` | -1 Team A |
-   | `W` | -1 Team B |
-   | `R` | Reset Score |
-   | `M` | Toggle Audio |
+- `public/dashboard.svg` — SkorKita dashboard logo.
+- `public/instagram.svg` and `public/github.svg` — Footer social icons.
+- `public/robots.txt` — Search crawler rules.
+- `public/sitemap.xml` — Sitemap entry for the site homepage.
 
----
+## Technology
 
-## 🧩 Project Structure & Components
-
-- **`src/app/layout.tsx`**: Root layout configuring metadata, SEO keywords, typography, and hydration handling.
-- **`src/app/page.tsx`**: Main page orchestrating the setup and live scoreboard flows.
-- **`src/components/ui/VoiceDropdown.tsx`**: Custom accessible dropdown for language/voice selection.
-- **`src/components/ui/ThemeToggle.tsx`**: Theme switcher button and hook managing persistent dark/light mode state.
-- **`src/hooks/useSpeech.ts`**: Custom speech synthesis hook handling voice matching and utterances.
-- **`src/lib/i18n.ts`**: Bilingual text dictionary supporting Indonesian and English UI.
-- **`src/types/game.types`**: TypeScript interfaces and types for game state and configurations.
-- **`src/app/globals.css`**: Design tokens, color system (Coral & Teal palette), responsive grid layouts, animations, and dark mode transitions.
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Material UI 9
+- Framer Motion
+- Web Speech API
+- Browser `localStorage`
