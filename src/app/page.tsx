@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import Tooltip from "@mui/material/Tooltip";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import { TEXTS, getLangLabel } from "@/lib/i18n";
 import { useTheme, ThemeToggle } from "@/components/ui/ThemeToggle";
 import { VoiceDropdown } from "@/components/ui/VoiceDropdown";
@@ -19,6 +22,8 @@ export default function Home() {
   const [voiceLang, setVoiceLang] = useState<LangKey | "">("id-ID");
   const [lastTeam, setLastTeam] = useState<Team | null>(null);
   const [dark, setDark] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMsg, setSnackbarMsg] = useState("");
   const restoredRef = useRef(false);
 
   const { toggleTheme, getSystemPreference } = useTheme();
@@ -109,6 +114,8 @@ export default function Home() {
     setScoreA(0);
     setScoreB(0);
     speak(t.resetSpeech);
+    setSnackbarMsg(t.resetSpeech);
+    setSnackbarOpen(true);
   };
 
   const newGame = () => {
@@ -138,8 +145,9 @@ export default function Home() {
           <LanguageToggle currentLang={activeLang} onChange={(lang) => setVoiceLang(lang)} />
           <ThemeToggle dark={dark} toggle={() => setDark(!dark)} label={tToggleLabel} />
         </div>
-        <div className="ambient ambient-one" /><div className="ambient ambient-two" />
-        <section className="setup-card">
+        <motion.div className="ambient ambient-one" animate={{ x: [0, 18, 0], y: [0, -14, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} />
+        <motion.div className="ambient ambient-two" animate={{ x: [0, -16, 0], y: [0, 15, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }} />
+        <motion.section className="setup-card" initial={{ scale: 0.96, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 120, damping: 18 }}>
           <div className="brand"><span className="brand-mark">+</span><span>SkorKita</span></div>
           <p className="eyebrow">{t.eyebrow}</p>
           <h1>{t.title1}<br /><em>{t.title2}</em></h1>
@@ -154,7 +162,7 @@ export default function Home() {
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="primary" onClick={() => { setStarted(true); speak(t.gameStartedSpeech); }}>{t.startBtn} <span>→</span></motion.button>
           </div>
           <p className="hint">{t.hint}</p>
-        </section>
+        </motion.section>
         {footerElement}
       </motion.main>
     );
@@ -162,7 +170,7 @@ export default function Home() {
 
   return (
     <motion.main className="game-page" initial="initial" animate="animate" exit="exit" variants={pageVariants}>
-      <header className="game-header">
+      <motion.header className="game-header" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
         <div className="brand"><span className="brand-mark">+</span><span>SkorKita</span></div>
         <div className="game-header-actions">
           <div className="live"><span /> {t.liveMatch}</div>
@@ -170,7 +178,7 @@ export default function Home() {
           <LanguageToggle currentLang={activeLang} onChange={(lang) => setVoiceLang(lang)} />
           <ThemeToggle dark={dark} toggle={() => setDark(!dark)} label={tToggleLabel} />
         </div>
-      </header>
+      </motion.header>
       <section className="score-grid">
         <motion.button className={`score-panel coral ${lastTeam === "A" ? "pulse" : ""}`} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }} onClick={() => addScore("A")}>
           <span className="team-index">01 / A</span>

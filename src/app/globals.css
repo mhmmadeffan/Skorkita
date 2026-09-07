@@ -44,7 +44,9 @@ input:focus, select:focus { border-color: var(--coral); }
 .theme-toggle { border: 0; background: var(--ink); color: var(--paper); padding: 8px 12px; border-radius: 99px; font-size: 11px; font-weight: bold; transition: background .3s; }
 .setup-header-actions { position: absolute; top: 20px; right: 20px; z-index: 10; display: flex; gap: 8px; }
 .language-selector-wrap { position: relative; }
-.language-toggle-btn { display: flex; align-items: center; gap: 6px; border: 0; background: var(--ink); color: var(--paper); padding: 8px 12px; border-radius: 99px; font-size: 11px; font-weight: bold; }
+.language-toggle-btn { display: flex; align-items: center; gap: 6px; border: 0; background: var(--ink); color: var(--paper); padding: 8px 12px; border-radius: 99px; font-size: 11px; font-weight: bold; transition: all .2s ease-in-out; }
+.language-toggle-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+.language-toggle-btn:active { transform: scale(.94); }
 .lang-arrow { font-size: 10px; }
 .language-dropdown-menu { position: absolute; top: calc(100% + 8px); right: 0; background: var(--paper); border: 1px solid var(--muted); border-radius: 8px; list-style: none; padding: 4px 0; margin: 0; z-index: 20; box-shadow: 0 12px 40px rgba(0,0,0,.15); width: 120px; }
 .language-dropdown-menu li { padding: 10px 16px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; }
