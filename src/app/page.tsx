@@ -142,8 +142,7 @@ export default function Home() {
 
   const footerElement = (
     <footer className="site-footer">
-      <div className="copyright">© {new Date().getFullYear()} Muhammad Effan Choirunanda<br />All rights reserved.</div>
-      <span className="social-links">
+      <span className="social-links" style={{ marginBottom: "12px" }}>
         <a className="social-button" href="https://instagram.com/mhmmadeffan" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
           <img src="/instagram.svg" alt="Instagram" width="16" height="16" className="social-icon" />
         </a>
@@ -151,6 +150,7 @@ export default function Home() {
           <img src="/github.svg" alt="GitHub" width="16" height="16" className="social-icon" />
         </a>
       </span>
+      <div className="copyright">© {new Date().getFullYear()} Muhammad Effan Choirunanda<br />All rights reserved.</div>
     </footer>
   );
 

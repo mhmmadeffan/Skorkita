@@ -46,7 +46,7 @@ input:focus, select:focus { border-color: var(--coral); }
 .center-controls .MuiButton-root { min-height: 44px; padding: 10px 20px; font-size: 13px; font-weight: 600; border-radius: 10px; }
 .hint { font-size: 11px; color: var(--muted); margin-top: 28px; }
 .theme-toggle { border: 0; background: var(--ink); color: var(--paper); padding: 8px 12px; border-radius: 99px; font-size: 11px; font-weight: bold; transition: background .3s; }
-.setup-header-actions { position: absolute; top: 20px; right: 20px; z-index: 10; display: flex; gap: 8px; }
+.setup-header-actions { position: absolute; top: 24px; right: 24px; z-index: 10; display: flex; gap: 12px; height: 50px; align-items: center; }
 .language-selector-wrap { position: relative; }
 .language-toggle-btn { display: flex; align-items: center; gap: 6px; border: 0; background: var(--ink); color: var(--paper); padding: 8px 12px; border-radius: 99px; font-size: 11px; font-weight: bold; transition: all .2s ease-in-out; }
 .language-toggle-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.18); }
@@ -57,8 +57,8 @@ input:focus, select:focus { border-color: var(--coral); }
 .language-dropdown-menu li:hover { background: rgba(0,0,0,.05); }
 .dark .language-dropdown-menu li:hover { background: rgba(255,255,255,.05); }
 .language-dropdown-menu li.selected { color: var(--coral); font-weight: bold; }
-.game-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.game-header-actions { display: flex; align-items: center; gap: 12px; }
+.game-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-top: 16px; }
+.game-header-actions { display: flex; align-items: center; gap: 12px; height: 50px; }
 .exit { display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--ink); background: var(--ink); color: var(--paper); padding: 8px 18px; border-radius: 99px; font-size: 11px; font-weight: 700; transition: all .2s; }
 .exit:hover { background: var(--coral); border-color: var(--coral); color: white; transform: translateY(-1px); }
 .exit span { color: inherit; font-size: 14px; margin: 0; }
