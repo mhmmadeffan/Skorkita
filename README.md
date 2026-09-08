@@ -1,6 +1,6 @@
 # SkorKita
 
-**SkorKita** is a responsive, offline-friendly match score counter built with **Next.js App Router**, **Material UI**, **Framer Motion**, and **Tailwind CSS**. It provides a full-screen two-team scoreboard with bilingual voice announcements, keyboard controls, persistent match state, and dark/light themes.
+**SkorKita** is a responsive, friendly match score counter built with **Next.js App Router**, **Material UI**, **Framer Motion**, and **Tailwind CSS**. It provides a full-screen two-team scoreboard with bilingual voice announcements, keyboard controls, persistent match state, and dark/light themes.
 
 ## Overview
 
